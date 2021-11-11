@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 
-function ToDoItem({ item, toggleTaskCompleted, deleteTask }) {
+function ToDoItem({ item, toggleTaskCompleted, deleteTask, setEdit }) {
   const backgroundColor = {
     backgroundColor: item.completed ? "#6e3b6e" : "#f9c2ff",
   };
@@ -29,7 +29,7 @@ function ToDoItem({ item, toggleTaskCompleted, deleteTask }) {
         <Button
           title="Edit"
           accessibilityLabel={"Edit" + item.name}
-          onPress={() => console.log("Edit Button pressed")}
+          onPress={setEdit}
         />
         <Button
           title="Delete"

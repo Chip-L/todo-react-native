@@ -59,6 +59,14 @@ function ToDoScreen(props) {
     setTasks(updatedTasks);
   }
 
+  function editTask(id, newName) {
+    // if this task has the same ID as the edited task
+    const editedTaskList = tasks.map((task) =>
+      id === task.id ? { ...task, name: newName } : task
+    );
+    setTasks(editedTaskList);
+  }
+
   function deleteTask(id) {
     const remainingTasks = tasks.filter((task) => id !== task.id);
     setTasks(remainingTasks);
@@ -82,6 +90,7 @@ function ToDoScreen(props) {
             item={item}
             toggleTaskCompleted={() => toggleTaskCompleted(item.id)}
             deleteTask={() => deleteTask(item.id)}
+            editTask={editTask}
           />
         )}
         keyExtractor={(item) => item.id}
