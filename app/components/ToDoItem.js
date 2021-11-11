@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React, { useState } from "react";
 
+// import my custom components
 import ToDoItemEdit from "./ToDoItemEdit";
 import ToDoItemView from "./ToDoItemView";
 
+// this pretty much holds the state and decides how to handle editing  a task
 function ToDoItem({ item, toggleTaskCompleted, deleteTask, editTask }) {
   const [isEditing, setIsEditing] = useState(false);
-
-  console.log("isEditing:", isEditing);
 
   return isEditing ? (
     <ToDoItemEdit

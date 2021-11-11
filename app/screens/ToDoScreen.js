@@ -9,11 +9,15 @@ import {
   View,
 } from "react-native";
 
+// import my custom components
 import Form from "../components/Form";
 import FilterButton from "../components/FilterButton";
 import ToDoItem from "../components/ToDoItem";
-import randomID from "../utils/randomID";
 
+// import utility files
+import randomID from "../utils/randomID"; //generates a random 12 character id
+
+// Sample data that should come in from a database.
 const DATA = [
   { id: "todo-" + randomID(), name: "Eat", completed: true },
   { id: "todo-" + randomID(), name: "Sleep", completed: false },
@@ -30,9 +34,11 @@ const FILTER_MAP = {
 const FILTER_NAMES = Object.keys(FILTER_MAP);
 
 function ToDoScreen(props) {
+  // set state objects
   const [tasks, setTasks] = useState(DATA);
   const [filter, setFilter] = useState("All");
 
+  // create button list for the filters (ToDo: Add colors for the buttons - maybe make them pressable)
   const fliterList = FILTER_NAMES.map((name) => (
     <FilterButton
       key={name}
@@ -42,11 +48,15 @@ function ToDoScreen(props) {
     />
   ));
 
+  // create task list - filtering it just the 1 time here and then using this in several places
   const taskList = tasks.filter(FILTER_MAP[filter]);
+
+  // create heading for the task list - this will indicate if 0 items are in the list
   const taskListHeading = `${taskList.length} ${
     filter !== "All" ? filter : ""
   } ${taskList.length === 1 ? "task" : "tasks"} remaining`;
 
+  /* ** FUNCTIONS TO MANIPULATE THE TASKS ** */
   function addTask(name) {
     const newTask = { id: "task-" + randomID(), name: name, completed: false };
     setTasks([...tasks, newTask]);
@@ -72,7 +82,7 @@ function ToDoScreen(props) {
     setTasks(remainingTasks);
   }
 
-  // console.log("\n------------\n\ntasks:\n", tasks);
+  // At last, the component to be returned, this will display the main screen
   return (
     <SafeAreaView style={styles.container}>
       <Text style={[styles.title, props.showLayout ? showBorders : {}]}>
@@ -98,12 +108,6 @@ function ToDoScreen(props) {
     </SafeAreaView>
   );
 }
-
-const showBorders = {
-  borderColor: "red",
-  borderStyle: "solid",
-  borderWidth: 1,
-};
 
 const styles = StyleSheet.create({
   container: {
