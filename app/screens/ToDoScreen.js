@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  FlatList,
   Platform,
   SafeAreaView,
   StatusBar,
@@ -10,25 +11,30 @@ import {
 
 import Form from "../components/Form";
 import ToDoItem from "../components/ToDoItem";
-import nanoid from "../utils/nanoid";
+import randomID from "../utils/randomID";
 
 const DATA = [
-  { id: "todo-" + nanoid(), name: "Eat", completed: true },
-  { id: "todo-" + nanoid(), name: "Sleep", completed: false },
-  { id: "todo-" + nanoid(), name: "Repeat", completed: false },
+  { id: "todo-" + randomID(), name: "Eat", completed: true },
+  { id: "todo-" + randomID(), name: "Sleep", completed: false },
+  { id: "todo-" + randomID(), name: "Repeat", completed: false },
 ];
 
 function ToDoScreen(props) {
   const [tasks, setTasks] = useState(DATA);
 
   function addTask(name) {
-    console.log(name);
-    const newTask = { id: "task-" + nanoid(), name: name, completed: false };
+    const newTask = { id: "task-" + randomID(), name: name, completed: false };
     setTasks([...tasks, newTask]);
   }
 
-  console.log(tasks);
+  function toggleTaskCompleted(id) {
+    const updatedTasks = tasks.map((task) =>
+      id === task.id ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updatedTasks);
+  }
 
+  // console.log("\n------------\n\ntasks:\n", tasks);
   return (
     <SafeAreaView style={styles.container}>
       <Text style={[styles.title, props.showLayout ? showBorders : {}]}>
@@ -40,7 +46,19 @@ function ToDoScreen(props) {
 
       <Text>h2 for UL </Text>
 
-      <ToDoItem item={DATA[1]} showLayout={props.showLayout} />
+      {/* <ToDoItem item={tasks[0]} toggleTaskCompleted={toggleTaskCompleted} />
+      <ToDoItem item={tasks[1]} toggleTaskCompleted={toggleTaskCompleted} /> */}
+      <FlatList
+        data={tasks}
+        renderItem={({ item }) => (
+          <ToDoItem
+            item={item}
+            toggleTaskCompleted={() => toggleTaskCompleted(item.id)}
+          />
+        )}
+        keyExtractor={(item) => item.id}
+        // extraData={selectedId}
+      />
     </SafeAreaView>
   );
 }
@@ -54,9 +72,9 @@ const showBorders = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignContent: "center",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     paddingHorizontal: 10,
     backgroundColor: "#ddd",
   },
@@ -65,7 +83,7 @@ const styles = StyleSheet.create({
     fontSize: 38,
     fontWeight: "700",
     textAlign: "center",
-    marginBottom: 10,
+    marginVertical: 10,
   },
 });
 

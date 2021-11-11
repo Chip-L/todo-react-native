@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Image,
@@ -8,21 +8,21 @@ import {
   View,
 } from "react-native";
 
-function ToDoItem({ item, showLayout }) {
-  const backgroundColor = item.completed ? "#6e3b6e" : "#f9c2ff";
-  const textColor = item.completed ? "white" : "black";
+function ToDoItem({ item, toggleTaskCompleted }) {
+  const backgroundColor = {
+    backgroundColor: item.completed ? "#6e3b6e" : "#f9c2ff",
+  };
+  const textColor = { color: item.completed ? "white" : "black" };
   const icon = item.completed
     ? require("../assets/active-icon.png")
     : require("../assets/inactive-icon.png");
 
-  const onPress = () => console.log("I was pressed");
-
-  console.log("ToDoItem:", item);
-  console.log(icon);
-
   return (
     <View style={[styles.card, backgroundColor]}>
-      <TouchableOpacity style={styles.touchable} onPress={onPress}>
+      <TouchableOpacity
+        // style={styles.label}
+        onPress={() => toggleTaskCompleted(item.id)}
+      >
         <View style={[styles.label]}>
           <Image style={[styles.icon]} source={icon} resizeMode="contain" />
           <Text style={[styles.title, textColor]}>{item.name}</Text>
@@ -56,10 +56,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
 
-    // elevation: 1,
-    // shadowColor: "black", //"#888888",
-    // shadowOffset: { width: 25, height: 100 },
-
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -70,7 +66,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     flexWrap: "nowrap",
-    // backgroundColor: "orange",
   },
   icon: {
     height: 32,
@@ -83,7 +78,7 @@ const styles = StyleSheet.create({
   },
 
   fixToText: {
-    // flex: 0,
+    // flex: 1,
     justifyContent: "space-between",
   },
 });
