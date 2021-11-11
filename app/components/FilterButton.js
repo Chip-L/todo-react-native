@@ -1,18 +1,24 @@
 import React from "react";
-import { Button } from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 
-function FilterButton({ name, setFilter }) {
+function FilterButton({ name, color, setFilter }) {
   return (
-    <Button
-      onPress={setFilter}
-      title={name}
-      accessibilityLabel={`Show ${name} tasks`}
-    />
+    <View style={styles.button}>
+      <Button
+        onPress={setFilter}
+        color={color}
+        title={name}
+        accessibilityLabel={`Show ${name} tasks`}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  button: {},
+  button: {
+    flex: 1,
+    padding: 5,
+  },
 });
 
 export default FilterButton;

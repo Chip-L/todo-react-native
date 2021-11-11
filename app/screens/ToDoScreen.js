@@ -10,6 +10,7 @@ import {
 } from "react-native";
 
 import Form from "../components/Form";
+import FilterButton from "../components/FilterButton";
 import ToDoItem from "../components/ToDoItem";
 import randomID from "../utils/randomID";
 
@@ -19,8 +20,27 @@ const DATA = [
   { id: "todo-" + randomID(), name: "Repeat", completed: false },
 ];
 
+// These constants are out here so they don't update with the App page refresh.
+const FILTER_MAP = {
+  All: () => true,
+  Active: (task) => !task.completed,
+  Completed: (task) => task.completed,
+};
+
+const FILTER_NAMES = Object.keys(FILTER_MAP);
+
 function ToDoScreen(props) {
   const [tasks, setTasks] = useState(DATA);
+  const [filter, setFilter] = useState("All");
+
+  const fliterList = FILTER_NAMES.map((name) => (
+    <FilterButton
+      key={name}
+      name={name}
+      color={name === filter ? "transparent" : ""}
+      setFilter={() => setFilter(name)}
+    />
+  ));
 
   function addTask(name) {
     const newTask = { id: "task-" + randomID(), name: name, completed: false };
@@ -47,14 +67,11 @@ function ToDoScreen(props) {
       </Text>
       <Form addTask={addTask} showLayout={props.showLayout} />
 
-      <Text>filter button placeholder</Text>
+      <View style={styles.filterList}>{fliterList}</View>
 
       <Text>h2 for UL </Text>
-
-      {/* <ToDoItem item={tasks[0]} toggleTaskCompleted={toggleTaskCompleted} />
-      <ToDoItem item={tasks[1]} toggleTaskCompleted={toggleTaskCompleted} /> */}
       <FlatList
-        data={tasks}
+        data={tasks.filter(FILTER_MAP[filter])}
         renderItem={({ item }) => (
           <ToDoItem
             item={item}
@@ -89,6 +106,10 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textAlign: "center",
     marginVertical: 10,
+  },
+  filterList: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
 
