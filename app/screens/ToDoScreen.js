@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Platform,
   SafeAreaView,
@@ -7,14 +7,26 @@ import {
   Text,
   View,
 } from "react-native";
+
 import Form from "../components/Form";
+import nanoid from "../utils/nanoid";
+
+const DATA = [
+  { id: "todo-" + nanoid(), name: "Eat", completed: true },
+  { id: "todo-" + nanoid(), name: "Sleep", completed: false },
+  { id: "todo-" + nanoid(), name: "Repeat", completed: false },
+];
 
 function ToDoScreen(props) {
+  const [tasks, setTasks] = useState(DATA);
+
   function addTask(name) {
     console.log(name);
-    // const newTask = { id: "task-" + nanoid(), name: name, completed: false };
-    // setTasks([...tasks, newTask]);
+    const newTask = { id: "task-" + nanoid(), name: name, completed: false };
+    setTasks([...tasks, newTask]);
   }
+
+  console.log(tasks);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -22,6 +34,8 @@ function ToDoScreen(props) {
         ToDoMatic
       </Text>
       <Form addTask={addTask} showLayout={props.showLayout} />
+      <Text>filter button placeholder</Text>
+      <Text>h2 for UL </Text>
     </SafeAreaView>
   );
 }
