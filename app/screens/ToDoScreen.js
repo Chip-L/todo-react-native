@@ -9,6 +9,7 @@ import {
 } from "react-native";
 
 import Form from "../components/Form";
+import ToDoItem from "../components/ToDoItem";
 import nanoid from "../utils/nanoid";
 
 const DATA = [
@@ -34,8 +35,12 @@ function ToDoScreen(props) {
         ToDoMatic
       </Text>
       <Form addTask={addTask} showLayout={props.showLayout} />
+
       <Text>filter button placeholder</Text>
+
       <Text>h2 for UL </Text>
+
+      <ToDoItem item={DATA[1]} showLayout={props.showLayout} />
     </SafeAreaView>
   );
 }
