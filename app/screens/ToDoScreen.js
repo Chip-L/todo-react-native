@@ -42,6 +42,11 @@ function ToDoScreen(props) {
     />
   ));
 
+  const taskList = tasks.filter(FILTER_MAP[filter]);
+  const taskListHeading = `${taskList.length} ${
+    filter !== "All" ? filter : ""
+  } ${taskList.length === 1 ? "task" : "tasks"} remaining`;
+
   function addTask(name) {
     const newTask = { id: "task-" + randomID(), name: name, completed: false };
     setTasks([...tasks, newTask]);
@@ -69,9 +74,9 @@ function ToDoScreen(props) {
 
       <View style={styles.filterList}>{fliterList}</View>
 
-      <Text>h2 for UL </Text>
+      <Text style={styles.h2}>{taskListHeading}</Text>
       <FlatList
-        data={tasks.filter(FILTER_MAP[filter])}
+        data={taskList}
         renderItem={({ item }) => (
           <ToDoItem
             item={item}
@@ -100,16 +105,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: "#ddd",
   },
+  filterList: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  h2: {
+    color: "rgb(77, 77, 77)",
+    fontSize: 24,
+    fontWeight: "300",
+    textAlign: "center",
+    marginTop: 10,
+  },
   title: {
     color: "rgb(77, 77, 77)",
     fontSize: 38,
     fontWeight: "700",
     textAlign: "center",
     marginVertical: 10,
-  },
-  filterList: {
-    flexDirection: "row",
-    justifyContent: "space-between",
   },
 });
 
