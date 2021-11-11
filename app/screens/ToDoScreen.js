@@ -10,12 +10,18 @@ import {
 import Form from "../components/Form";
 
 function ToDoScreen(props) {
+  function addTask(name) {
+    console.log(name);
+    // const newTask = { id: "task-" + nanoid(), name: name, completed: false };
+    // setTasks([...tasks, newTask]);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={[styles.title, props.showLayout ? showBorders : {}]}>
         ToDoMatic
       </Text>
-      <Form showLayout={props.showLayout} />
+      <Form addTask={addTask} showLayout={props.showLayout} />
     </SafeAreaView>
   );
 }

@@ -1,21 +1,28 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
-function Form(props) {
-  const [task, setTask] = useState("See ME!");
+function Form({ addTask, showLayout }) {
+  const [name, setName] = useState("");
 
-  console.log(props);
+  function handleOnPress() {
+    if (name) {
+      addTask(name);
+      setName("");
+    }
+  }
+
   return (
-    <View style={[styles.form, props.showLayout ? showBorders : {}]}>
-      <Text style={[styles.h2, props.showLayout ? showBorders : {}]}>
+    <View style={[styles.form, showLayout ? showBorders : {}]}>
+      <Text style={[styles.h2, showLayout ? showBorders : {}]}>
         What needs to be done?
       </Text>
       <TextInput
         style={styles.input}
         autoComplete="off"
-        onChangeText={setTask}
-        value={task}
+        onChangeText={setName}
+        value={name}
       />
+      <Button style={styles.button} title="Add" onPress={handleOnPress} />
     </View>
   );
 }
@@ -27,6 +34,10 @@ const showBorders = {
 };
 
 const styles = StyleSheet.create({
+  button: {
+    // margin: 12,
+    // padding: 10,
+  },
   form: {
     alignContent: "center",
     marginVertical: 10,
@@ -40,7 +51,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    margin: 12,
+    marginVertical: 12,
     borderWidth: 1,
     padding: 10,
   },
