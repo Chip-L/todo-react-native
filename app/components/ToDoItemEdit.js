@@ -1,41 +1,42 @@
-import React from "react";
-import {
-  Button,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React, { useState } from "react";
+import { Button, StyleSheet, TextInput, View } from "react-native";
 
-function ToDoItem({ item, toggleTaskCompleted, deleteTask, setEdit }) {
+function ToDoItem({ item, editTask, cancelEdit }) {
+  const [newName, setNewName] = useState(item.name);
+
   const backgroundColor = {
     backgroundColor: item.completed ? "#6e3b6e" : "#f9c2ff",
   };
   const textColor = { color: item.completed ? "white" : "black" };
-  const icon = item.completed
-    ? require("../assets/active-icon.png")
-    : require("../assets/inactive-icon.png");
+
+  function handleSave() {
+    editTask(item.id, newName);
+    setNewName("");
+    cancelEdit();
+  }
 
   return (
     <View style={[styles.card, backgroundColor]}>
-      <TouchableOpacity onPress={toggleTaskCompleted}>
+      <View>
         <View style={[styles.label]}>
-          <Image style={[styles.icon]} source={icon} resizeMode="contain" />
-          <Text style={[styles.title, textColor]}>{item.name}</Text>
+          <TextInput
+            style={[styles.title, textColor]}
+            onChangeText={setNewName}
+            value={newName}
+          />
         </View>
-      </TouchableOpacity>
+      </View>
       <View style={[styles.fixToText]}>
         <Button
-          title="Edit"
-          accessibilityLabel={"Edit" + item.name}
-          onPress={setEdit}
+          title="Cancel"
+          accessibilityLabel={"Cancel renaming"}
+          onPress={cancelEdit}
+          color="tomato"
         />
         <Button
-          title="Delete"
-          accessibilityLabel={"Delete" + item.name}
-          color="tomato"
-          onPress={deleteTask}
+          title="Save"
+          accessibilityLabel={`Save new name for ${item.name}`}
+          onPress={handleSave}
         />
       </View>
     </View>
