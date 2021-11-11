@@ -2,5 +2,5 @@ import React from "react";
 import ToDoScreen from "./app/screens/ToDoScreen";
 
 export default function App() {
-  return <ToDoScreen />;
+  return <ToDoScreen showLayout={true} />;
 }
