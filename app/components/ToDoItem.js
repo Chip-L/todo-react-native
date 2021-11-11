@@ -19,10 +19,7 @@ function ToDoItem({ item, toggleTaskCompleted }) {
 
   return (
     <View style={[styles.card, backgroundColor]}>
-      <TouchableOpacity
-        // style={styles.label}
-        onPress={() => toggleTaskCompleted(item.id)}
-      >
+      <TouchableOpacity onPress={() => toggleTaskCompleted(item.id)}>
         <View style={[styles.label]}>
           <Image style={[styles.icon]} source={icon} resizeMode="contain" />
           <Text style={[styles.title, textColor]}>{item.name}</Text>
@@ -74,11 +71,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    flexGrow: 2,
   },
 
   fixToText: {
-    // flex: 1,
     justifyContent: "space-between",
   },
 });
