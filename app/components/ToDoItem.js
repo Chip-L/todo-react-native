@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 
-function ToDoItem({ item, toggleTaskCompleted }) {
+function ToDoItem({ item, toggleTaskCompleted, deleteTask }) {
   const backgroundColor = {
     backgroundColor: item.completed ? "#6e3b6e" : "#f9c2ff",
   };
@@ -19,7 +19,7 @@ function ToDoItem({ item, toggleTaskCompleted }) {
 
   return (
     <View style={[styles.card, backgroundColor]}>
-      <TouchableOpacity onPress={() => toggleTaskCompleted(item.id)}>
+      <TouchableOpacity onPress={toggleTaskCompleted}>
         <View style={[styles.label]}>
           <Image style={[styles.icon]} source={icon} resizeMode="contain" />
           <Text style={[styles.title, textColor]}>{item.name}</Text>
@@ -35,7 +35,7 @@ function ToDoItem({ item, toggleTaskCompleted }) {
           title="Delete"
           accessibilityLabel={"Delete" + item.name}
           color="tomato"
-          onPress={() => console.log("Delete Button pressed")}
+          onPress={deleteTask}
         />
       </View>
     </View>

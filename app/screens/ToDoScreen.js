@@ -34,6 +34,11 @@ function ToDoScreen(props) {
     setTasks(updatedTasks);
   }
 
+  function deleteTask(id) {
+    const remainingTasks = tasks.filter((task) => id !== task.id);
+    setTasks(remainingTasks);
+  }
+
   // console.log("\n------------\n\ntasks:\n", tasks);
   return (
     <SafeAreaView style={styles.container}>
@@ -54,10 +59,10 @@ function ToDoScreen(props) {
           <ToDoItem
             item={item}
             toggleTaskCompleted={() => toggleTaskCompleted(item.id)}
+            deleteTask={() => deleteTask(item.id)}
           />
         )}
         keyExtractor={(item) => item.id}
-        // extraData={selectedId}
       />
     </SafeAreaView>
   );
